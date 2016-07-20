@@ -1,0 +1,45 @@
+<div class="o-container">
+    <div class="o-grid o-grid--gutter c-doormat-row">
+        <p>A plugin to create tabs</p>
+    </div>
+
+    <div class="o-grid__item u-mb-epsilon u-mb-epsilon">
+        <h3>Default (overridable) Options</h3>
+
+        {% highlight javascript linenos=table %}
+            {% include atom.javascript.tabs.default.html %}
+        {% endhighlight %}
+    </div>
+
+    <div class="o-grid__item u-mb-epsilon">
+        <h3>Public Methods</h3>
+        {% highlight javascript linenos=table %}
+            activate();
+        {% endhighlight %}
+    </div>
+
+    <div class="o-grid__item u-mb-epsilon">
+        <h3>Use / Examples</h3>
+        <h4>Default example</h4>
+        <p>Create a new object. Add the default class to the anchor elements and point the anchor (href) to the content's id. Add the referenced id as an attribute to the tab's content.</p>
+
+
+        {% highlight javascript linenos=table %}
+            var exampleTabs = new ChopstickTabs();
+        {% endhighlight %}
+
+        {% highlight html linenos=table %}
+            {% include atom.javascript.tabs.html.html %}
+        {% endhighlight %}
+
+        <div class="o-grid o-grid--gutter">
+            <div class="o-grid__item u-2-of-3-bp4">
+                {% include atom.javascript.tabs.html.html %}
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

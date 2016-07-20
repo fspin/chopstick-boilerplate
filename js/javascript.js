@@ -1,13 +1,12 @@
-var toggleButton = new ChopstickToggle({
-    target: '.js-toggle-target'
-});
+var toggleButton = new ChopstickToggle();
 
 var mobileNavToggle = new ChopstickToggle({
     trigger: '.js-nav-trigger',
     target: '.js-nav',
-    className: 'is-visible'
+    targetClassName: 'is-visible'
 });
 
+var exampleTabs = new ChopstickTabs();
 
 
 
@@ -51,10 +50,9 @@ var mobileNavToggle = new ChopstickToggle({
 
 
 
-
-if ($('js-nav').hasClass('is-visible')) {
-    console.log(mobileNavToggle.trigger);
-}
+// if ($('js-nav').hasClass('is-visible')) {
+//     console.log(mobileNavToggle.trigger);
+// }
 
 
 /* ISSUES */

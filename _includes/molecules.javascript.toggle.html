@@ -1,0 +1,56 @@
+<div class="o-container">
+    <div class="o-grid o-grid--gutter c-doormat-row">
+        <div class="o-grid__item">
+            <p>A toggle plugin to hide/show elements. It does adding the class '.is-hidden' to the targetted element and adding the class '.is-active' to the trigger as default.</p>
+        </div>
+
+        <div class="o-grid__item u-mb-epsilon u-mb-epsilon">
+            <h3>Default (overridable) Options</h3>
+
+            {% highlight javascript linenos=table %}
+                {% include atom.javascript.toggle.default.html %}
+            {% endhighlight %}
+        </div>
+
+        <div class="o-grid__item u-mb-epsilon">
+            <h3>Public Methods</h3>
+            {% highlight javascript linenos=table %}
+                {% include atom.javascript.toggle.methods.html %}
+            {% endhighlight %}
+        </div>
+
+        <div class="o-grid__item u-mb-epsilon">
+            <h3>Use / Examples</h3>
+            <h4>Default example with a button</h4>
+            <p>Create a new object. Add the default class to the trigger element. Add the default class to the target element.</p>
+
+
+            {% highlight javascript linenos=table %}
+                var toggleButton = new ChopstickToggle();
+            {% endhighlight %}
+
+            {% highlight html linenos=table %}
+                {% include atom.javascript.toggle.html.html %}
+            {% endhighlight %}
+
+            <div class="o-grid o-grid--gutter">
+                {% include atom.javascript.toggle.html.html %}
+            </div>
+
+            <h4>Example in a responsive navigation bar</h4>
+
+            <p>Create a new object and override the default options. Add the class to the trigger element. Add the class to the target element.</p>
+
+            {% highlight javascript linenos=table %}
+                {% include atom.javascript.toggle.defined.html %}
+            {% endhighlight %}
+
+            {% highlight html linenos=table %}
+                {% include components.nav-main.html %}
+            {% endhighlight %}
+
+            <p>To see it working, resize your browser.</p>
+
+        </div>
+    </div>
+</div>

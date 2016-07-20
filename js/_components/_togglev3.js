@@ -20,8 +20,9 @@
         // Create default values (super basic toggle)
         var defaults = {
             trigger: '.js-toggle-trigger',
+            triggerClassName: 'is-active', // class toggled on trigger
             target: '.js-toggle-target',
-            className: 'is-hidden',
+            targetClassName: 'is-hidden', // class toggled on target
             eventName: 'click',
             preventDefault: true, //the default action of the event will not be triggered.
         }
@@ -32,7 +33,7 @@
         // console.log(this.options);
         // }
 
-        console.log(this.options);
+        // console.log(this.options);
         bindUIEvents.call(this);
     }
 
@@ -40,19 +41,22 @@
     ChopstickToggle.prototype.applyState = function() {
         // Apply a certain classname on a certain target
         var _ = this;
-        $(_.options.target).addClass(_.options.className);
+        $(_.options.target).addClass(_.options.targetClassName);
+        $(_.options.trigger).addClass(_.options.triggerClassName);
     }
 
     ChopstickToggle.prototype.removeState = function() {
         // Remove a certain classname on a certain target
         var _ = this;
-        $(_.options.target).removeClass(_.options.className);
+        $(_.options.target).removeClass(_.options.targetClassName);
+        $(_.options.trigger).removeClass(_.options.triggerClassName);
     }
 
     ChopstickToggle.prototype.toggleState = function() {
         // toggle a certain classname on a certain target
         var _ = this;
-        $(_.options.target).toggleClass(_.options.className);
+        $(_.options.target).toggleClass(_.options.targetClassName);
+        $(_.options.trigger).toggleClass(_.options.triggerClassName);
     }
 
     // Private methods

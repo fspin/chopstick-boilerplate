@@ -95,6 +95,79 @@ chopstick.mobileNav =
     }
 };
 
+/**
+ * chopstickTabs
+ * A basic javascript tabs module with extra options
+ *
+ * Dependency:
+ * - jQuery
+ *
+ * HTML Structure:
+ * - tabNavigation > links (a.js-tabs-link) with attr(href) referencing the #tabs
+ * - tabContent > in .js-tabs-content > elements with an id to be linked.
+ *
+ * Functionalities:
+ * -
+**/
+
+(function() {
+
+    // Define the constructor
+    this.ChopstickTabs = function() {
+
+        // Create default values (super basic tabs)
+        var defaults = {
+            // tabNavigation: $('.js-tabs-nav'),
+            tabLinks: $('.js-tabs-link'),
+            eventName: 'click', // which event to select the tabs
+            className: 'is-selected',
+            preventDefault: true //the default action of the event will not be triggered.
+        }
+
+        // Create options by extending defaults with the passed in arugments
+        this.options = $.extend(defaults, arguments[0]); //https://api.jquery.com/jquery.extend/
+
+        bindUIEvents.call(this);
+    }
+
+    // Public methods
+    ChopstickTabs.prototype.activate = function(navigationItem) {
+        var targetPane = $(navigationItem.attr('href'));
+
+        navigationItem.parent().siblings().each(function() {
+            if ($(this).hasClass('is-selected')) {
+                $(this).removeClass('is-selected');
+            }
+        });
+
+        // Set the correct nav item active
+        navigationItem.parent().addClass(this.options.className);
+
+        // Reset all panes
+        targetPane.siblings().each(function() {
+            $(this).hide();
+        });
+
+        // Go to target pane
+        targetPane.show();
+    }
+
+    // Private methods
+    function bindUIEvents() {
+        var _ = this;
+
+        _.options.tabLinks.on(_.options.eventName, function(e) {
+
+            // Toggle the default classname on the default target
+            if (_.options.preventDefault) {
+                e.preventDefault();
+            }
+
+            _.activate($(this));
+        });
+    }
+})();
+
 var toggleSettings
 chopstick.toggle =
 {
@@ -154,8 +227,9 @@ chopstick.toggle =
         // Create default values (super basic toggle)
         var defaults = {
             trigger: '.js-toggle-trigger',
+            triggerClassName: 'is-active', // class toggled on trigger
             target: '.js-toggle-target',
-            className: 'is-hidden',
+            targetClassName: 'is-hidden', // class toggled on target
             eventName: 'click',
             preventDefault: true, //the default action of the event will not be triggered.
         }
@@ -166,7 +240,7 @@ chopstick.toggle =
         // console.log(this.options);
         // }
 
-        console.log(this.options);
+        // console.log(this.options);
         bindUIEvents.call(this);
     }
 
@@ -174,19 +248,22 @@ chopstick.toggle =
     ChopstickToggle.prototype.applyState = function() {
         // Apply a certain classname on a certain target
         var _ = this;
-        $(_.options.target).addClass(_.options.className);
+        $(_.options.target).addClass(_.options.targetClassName);
+        $(_.options.trigger).addClass(_.options.triggerClassName);
     }
 
     ChopstickToggle.prototype.removeState = function() {
         // Remove a certain classname on a certain target
         var _ = this;
-        $(_.options.target).removeClass(_.options.className);
+        $(_.options.target).removeClass(_.options.targetClassName);
+        $(_.options.trigger).removeClass(_.options.triggerClassName);
     }
 
     ChopstickToggle.prototype.toggleState = function() {
         // toggle a certain classname on a certain target
         var _ = this;
-        $(_.options.target).toggleClass(_.options.className);
+        $(_.options.target).toggleClass(_.options.targetClassName);
+        $(_.options.trigger).toggleClass(_.options.triggerClassName);
     }
 
     // Private methods
@@ -245,16 +322,15 @@ chopstick.toggle =
 
 $(chopstick.init);
 
-var toggleButton = new ChopstickToggle({
-    target: '.js-toggle-target'
-});
+var toggleButton = new ChopstickToggle();
 
 var mobileNavToggle = new ChopstickToggle({
     trigger: '.js-nav-trigger',
     target: '.js-nav',
-    className: 'is-visible'
+    targetClassName: 'is-visible'
 });
 
+var exampleTabs = new ChopstickTabs();
 
 
 
@@ -298,10 +374,9 @@ var mobileNavToggle = new ChopstickToggle({
 
 
 
-
-if ($('js-nav').hasClass('is-visible')) {
-    console.log(mobileNavToggle.trigger);
-}
+// if ($('js-nav').hasClass('is-visible')) {
+//     console.log(mobileNavToggle.trigger);
+// }
 
 
 /* ISSUES */
