@@ -19,6 +19,8 @@ $color-error                : #FF4136 !default;
 $color-success              : #2ECC40 !default;
 $color-notice               : #FF851B !default;
 
+$color-close                : #333 !default;
+
 // Palettes
 $palettes: (
     color-neutral: (
@@ -54,5 +56,9 @@ $palettes: (
         light               : hsl(hue($color-notice),70,60),
         base                : $color-notice,
         dark                : hsl(hue($color-notice),100,35),
+    ),
+    color-close: (
+        light               : hsl(hue($color-close),0,50),
+        base                : $color-close,
     )
 );

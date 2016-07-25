@@ -1,13 +1,13 @@
-var toggleButton = new ChopstickToggle();
+var toggler = new ChopstickToggle();
 
 var mobileNavToggle = new ChopstickToggle({
     trigger: '.js-nav-trigger',
-    target: '.js-nav',
     targetClassName: 'is-visible'
 });
 
 var exampleTabs = new ChopstickTabs();
 
+var exampleModal = new ChopstickModal();
 
 
 

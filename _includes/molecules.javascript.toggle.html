@@ -1,7 +1,8 @@
 <div class="o-container">
     <div class="o-grid o-grid--gutter c-doormat-row">
         <div class="o-grid__item">
-            <p>A toggle plugin to hide/show elements. It does adding the class '.is-hidden' to the targetted element and adding the class '.is-active' to the trigger as default.</p>
+            <p>A toggle plugin to hide/show elements. It does toggling the class '.is-hidden' to the targetted element and toggling the class '.is-active' to the trigger as default.</p>
+            <p>It also uses the 'data-target-selector' to make easy the implementation.</p>
         </div>
 
         <div class="o-grid__item u-mb-epsilon u-mb-epsilon">
@@ -22,7 +23,11 @@
         <div class="o-grid__item u-mb-epsilon">
             <h3>Use / Examples</h3>
             <h4>Default example with a button</h4>
-            <p>Create a new object. Add the default class to the trigger element. Add the default class to the target element.</p>
+            <ul>
+                <li>Create a new object [javascript]</li>
+                <li>Add the default class to the trigger element and the data-target-selector pointing to the target class [html]</li>
+                <li>Add the desired class to the target element [html]</li>
+            </ul>
 
 
             {% highlight javascript linenos=table %}
@@ -39,7 +44,10 @@
 
             <h4>Example in a responsive navigation bar</h4>
 
-            <p>Create a new object and override the default options. Add the class to the trigger element. Add the class to the target element.</p>
+            <ul>
+                <li>Create a new object and override the default options</li>
+                <li>Add the class to the trigger element. Add the class to the target element</li>
+            </ul>
 
             {% highlight javascript linenos=table %}
                 {% include atom.javascript.toggle.defined.html %}
@@ -49,7 +57,7 @@
                 {% include components.nav-main.html %}
             {% endhighlight %}
 
-            <p>To see it working, resize your browser.</p>
+            <p>To see it working, resize your browser until the menu is a button.</p>
 
         </div>
     </div>

@@ -39,61 +39,150 @@ var chopstick =
     }
 };
 
-var hideSettings
-chopstick.hide =
-{
-    settings:
-    {
-        hide: $('.js-hide')
-    },
+// var hideSettings
+// chopstick.hide =
+// {
+//     settings:
+//     {
+//         hide: $('.js-hide')
+//     },
+//
+//     init: function()
+//     {
+//         hideSettings = chopstick.hide.settings;
+//         chopstick.hide.hideContent();
+//     },
+//
+//     hideContent: function ()
+//     {
+//         hideSettings.hide.on('click', function(e)
+//         {
+//             e.preventDefault();
+//             $(this).closest(hideSettings.hide).parent().addClass('is-hidden');
+//         });
+//     }
+// };
 
-    init: function()
-    {
-        hideSettings = chopstick.hide.settings;
-        chopstick.hide.hideContent();
-    },
+// var mobileNavSettings
+// chopstick.mobileNav =
+// {
+//     settings:
+//     {
+//         navigation: $('.js-nav'),
+//         trigger: $('.js-nav-trigger')
+//     },
+//
+//     init: function()
+//     {
+//         // Initialize mobile nav settings
+//         mobileNavSettings = chopstick.mobileNav.settings;
+//         // Bind toggle events
+//         chopstick.mobileNav.bindUIEvents();
+//     },
+//
+//     bindUIEvents: function()
+//     {
+//         mobileNavSettings.trigger.on('click', function() {
+//             chopstick.mobileNav.toggleNavigation();
+//         });
+//     },
+//
+//     // build mobile nav
+//     toggleNavigation: function()
+//     {
+//         mobileNavSettings.navigation.toggleClass('is-visible');
+//         mobileNavSettings.trigger.toggleClass('is-active');
+//     }
+// };
 
-    hideContent: function ()
-    {
-        hideSettings.hide.on('click', function(e)
-        {
-            e.preventDefault();
-            $(this).closest(hideSettings.hide).parent().addClass('is-hidden');
-        });
+/**
+ * chopstickModal
+ * A basic javascript modal module with extra options
+ *
+ * Dependency:
+ * - jQuery
+ *
+ * HTML Structure:
+ * - .js-modal-overlay > .js-modal > .js-modal-close ~ .js-modal-content
+ * - A wrapper (height & width: 100%) as an overlay. Inside, the modal itself.
+ *   And inside of it, two childrens: a close button and the content
+ *   with an auto overflow.
+ * - Default event: 'click'
+ *
+ * Freely based on:
+ * - [Building Your Own JavaScript Modal Plugin](https://scotch.io/tutorials/building-your-own-javascript-modal-plugin)
+ * - [Considerations for Styling a Modal](https://css-tricks.com/considerations-styling-modal/)
+ *
+ * @TODO accessibility issues are not approached: focus, tab_index, etc.
+ * - More info: [Building better accessibility primitives](http://robdodson.me/building-better-accessibility-primitives/)
+**/
+
+(function() {
+
+    // Define the constructor
+    this.ChopstickModal = function() {
+
+        // Create default values (basic modal)
+        var defaults = {
+            classTrigger: '.js-modal',
+            classContent: '.js-modal-content',
+            classOverlay: '.js-modal-overlay',
+            classCloseButton: '.js-modal-close',
+            eventName: 'click', // which event to select the tabs
+            preventDefault: true //the default action of the event will not be triggered.
+        }
+
+        // Create options by extending defaults with the passed in arugments
+        this.options = $.extend(defaults, arguments[0]); //https://api.jquery.com/jquery.extend/
+
+        bindUIEvents.call(this);
     }
-};
 
-var mobileNavSettings
-chopstick.mobileNav =
-{
-    settings:
-    {
-        navigation: $('.js-nav'),
-        trigger: $('.js-nav-trigger')
-    },
+    // Public methods
+    ChopstickModal.prototype.openModal = function() {
+        // Show the modal
+        $(this.options.classOverlay).addClass('is-active');
+        $(this.options.classContent).delay(200).addClass('is-active');
 
-    init: function()
-    {
-        // Initialize mobile nav settings
-        mobileNavSettings = chopstick.mobileNav.settings;
-        // Bind toggle events
-        chopstick.mobileNav.bindUIEvents();
-    },
-
-    bindUIEvents: function()
-    {
-        mobileNavSettings.trigger.on('click', function() {
-            chopstick.mobileNav.toggleNavigation();
-        });
-    },
-
-    // build mobile nav
-    toggleNavigation: function()
-    {
-        mobileNavSettings.navigation.toggleClass('is-visible');
-        mobileNavSettings.trigger.toggleClass('is-active');
+        // Disable scrolling
+        $('body').addClass('is-open-modal');
     }
-};
+
+    ChopstickModal.prototype.closeModal = function() {
+        // Hide the modal
+        $(this.options.classContent).removeClass('is-active');
+        $(this.options.classOverlay).delay(200).removeClass('is-active');
+
+        // Enable scrolling
+        $('body').removeClass('is-open-modal');
+    }
+
+    function bindUIEvents() {
+        var _ = this;
+
+        // @TODO: control if is it bind() a way to preventDefault? or if is it better the former method?
+        /*
+        // _.options.tabLinks.on(_.options.eventName, function(e) {
+        //
+        //     // Toggle the default classname on the default target
+        //     if (_.options.preventDefault) {
+        //         e.preventDefault();
+        //     }
+        //
+        //     _.activate($(this));
+        // });
+        */
+
+        // Binding the close function to CloseButton & Overlay
+        var closeTrigger = [this.options.classCloseButton, this.options.classOverlay];
+        for (var i = 0; i < closeTrigger.length; i++) {
+            $(closeTrigger[i]).on(this.options.eventName, this.closeModal.bind(this));
+        }
+
+        // Binding the open function to the trigger element
+        $(this.options.classTrigger).on(this.options.eventName, this.openModal.bind(this));
+    }
+}());
 
 /**
  * chopstickTabs
@@ -103,8 +192,7 @@ chopstick.mobileNav =
  * - jQuery
  *
  * HTML Structure:
- * - tabNavigation > links (a.js-tabs-link) with attr(href) referencing the #tabs
- * - tabContent > in .js-tabs-content > elements with an id to be linked.
+ * - links (a.js-tabs-link) with attr(href) referencing the #tabs
  *
  * Functionalities:
  * -
@@ -117,7 +205,6 @@ chopstick.mobileNav =
 
         // Create default values (super basic tabs)
         var defaults = {
-            // tabNavigation: $('.js-tabs-nav'),
             tabLinks: $('.js-tabs-link'),
             eventName: 'click', // which event to select the tabs
             className: 'is-selected',
@@ -166,44 +253,7 @@ chopstick.mobileNav =
             _.activate($(this));
         });
     }
-})();
-
-var toggleSettings
-chopstick.toggle =
-{
-    settings:
-    {
-        showHideToggle: $('.js-show-hide')
-    },
-
-    init: function()
-    {
-        // Initialize toggle settings
-        toggleSettings = chopstick.toggle.settings;
-        // Bind toggle events
-        chopstick.toggle.bindUIEvents();
-    },
-
-    bindUIEvents: function()
-    {
-        // Bind show hide event
-        toggleSettings.showHideToggle.on('touchstart click', function(e){
-            var trigger = $(this);
-            // Check if action needs to be prevented
-            if (trigger.data("action") == "none") {
-                e.preventDefault();
-            }
-            chopstick.toggle.showHide(trigger.data("target-selector"));
-            trigger.toggleClass('is-toggled');
-        });
-    },
-
-    showHide: function(targets)
-    {
-        //  Toggle the 'is-hidden' class
-        $(targets).toggleClass('is-hidden');
-    }
-};
+}());
 
 /**
  * chopstickToggle
@@ -228,110 +278,74 @@ chopstick.toggle =
         var defaults = {
             trigger: '.js-toggle-trigger',
             triggerClassName: 'is-active', // class toggled on trigger
-            target: '.js-toggle-target',
             targetClassName: 'is-hidden', // class toggled on target
             eventName: 'click',
-            preventDefault: true, //the default action of the event will not be triggered.
+            preventDefault: true //the default action of the event will not be triggered.
         }
 
         // Create options by extending defaults with the passed in arugments
-        // if (arguments[0] && typeof arguments[0] === "object") {
         this.options = $.extend(defaults, arguments[0]); //https://api.jquery.com/jquery.extend/
-        // console.log(this.options);
-        // }
 
-        // console.log(this.options);
         bindUIEvents.call(this);
     }
 
     // public methods
     ChopstickToggle.prototype.applyState = function() {
-        // Apply a certain classname on a certain target
+        // Apply the targetClassName on the target
+        // Apply the triggerClassName on the trigger
         var _ = this;
-        $(_.options.target).addClass(_.options.targetClassName);
-        $(_.options.trigger).addClass(_.options.triggerClassName);
+        $(_.options.thisTarget).addClass(_.options.targetClassName);
+        $(_.options.thisTrigger).addClass(_.options.triggerClassName);
     }
 
     ChopstickToggle.prototype.removeState = function() {
-        // Remove a certain classname on a certain target
-        var _ = this;
-        $(_.options.target).removeClass(_.options.targetClassName);
-        $(_.options.trigger).removeClass(_.options.triggerClassName);
+        // Remove the targetClassName on the target
+        // Remove the triggerClassName on the trigger
+        $(_.options.thisTarget).removeClass(_.options.targetClassName);
+        $(_.options.thisTrigger).removeClass(_.options.triggerClassName);
     }
 
     ChopstickToggle.prototype.toggleState = function() {
-        // toggle a certain classname on a certain target
+        // Toggle the targetClassName on the target
+        // Toggle the triggerClassName on the trigger
         var _ = this;
-        $(_.options.target).toggleClass(_.options.targetClassName);
-        $(_.options.trigger).toggleClass(_.options.triggerClassName);
+        $(_.options.thisTarget).toggleClass(_.options.targetClassName);
+        $(_.options.thisTrigger).toggleClass(_.options.triggerClassName);
     }
 
     // Private methods
     function bindUIEvents() {
         var _ = this;
-        // console.log(_.options.eventName);
 
+        // rethinking the toggler... case styleguide.html
+        // we still use the data-target-selector to make it
+        // easier to implement.
         $(_.options.trigger).on(_.options.eventName, function(e) {
             // Toggle the default classname on the default target
+
             if (_.options.preventDefault) {
                 e.preventDefault();
             }
 
+            _.options.thisTrigger = $(this);
+            _.options.thisTarget = $(this).data('target-selector');
             _.toggleState();
         });
     }
-
-    // var module = {};
-    //
-    // /*
-    // *  chopstickToggle.class
-    // *  Toggle a class on an HTML element.
-    // *  @param element {String} Element reference (e.g. .js-toggle-class)
-    // *  @param classname {String} Class that needs to be toggled (e.g. .is-hidden)
-    // *  @param pd {Number} Indicator if e.preventDefault needs to be enabled.
-    // *  @param evt {String} Defines on which event the toggle needs to be triggerd.
-    // */
-    // module.class = function(element, classname, pd, evt) {
-    //     var $target = $(element);
-    //
-    //     if (typeof pd === 'undefined') { pd = true; }
-    //     if (typeof evt === 'undefined') { evt = 'click'; }
-    //
-    //     $target.on(evt, function(e) {
-    //         // check if preventDefault needs to be enabled
-    //         if(_enableCheck(pd)) { e.preventDefault(); }
-    //         // toggle the class on the clicked element
-    //         $(this).toggleClass(classname);
-    //     });
-    // }
-    //
-    // /*
-    // *  _enableCheck
-    // *  Used to check if user wants/doesn't want to enable a functionality.
-    // *  @param value {Number} Value that indicates a want/doens't want.
-    // */
-    // var _enableCheck = function(value) {
-    //     if (value === 1) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    //
-    // return module;
 }());
 
 $(chopstick.init);
 
-var toggleButton = new ChopstickToggle();
+var toggler = new ChopstickToggle();
 
 var mobileNavToggle = new ChopstickToggle({
     trigger: '.js-nav-trigger',
-    target: '.js-nav',
     targetClassName: 'is-visible'
 });
 
 var exampleTabs = new ChopstickTabs();
 
+var exampleModal = new ChopstickModal();
 
 
 

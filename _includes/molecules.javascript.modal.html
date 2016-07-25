@@ -1,7 +1,7 @@
 <div class="o-container">
     <div class="o-grid o-grid--gutter c-doormat-row">
         <div class="o-grid__item">
-            <p>A plugin to create tabs</p>
+            <p>A plugin to create a simple modal</p>
         </div>
     </div>
 
@@ -9,14 +9,14 @@
         <h3>Default (overridable) Options</h3>
 
         {% highlight javascript linenos=table %}
-            {% include atom.javascript.tabs.default.html %}
+            {% include atom.javascript.modal.default.html %}
         {% endhighlight %}
     </div>
 
     <div class="o-grid__item u-mb-epsilon">
         <h3>Public Methods</h3>
         {% highlight javascript linenos=table %}
-            activate();
+            {% include atom.javascript.modal.methods.html %}
         {% endhighlight %}
     </div>
 
@@ -25,7 +25,14 @@
         <h4>Default example</h4>
         <ul>
             <li>Create a new object [javascript]</li>
-            <li>Add the default class to the anchor elements and point the anchor (href) to the content's id. Add the referenced id as an attribute to the tab's content [html]</li>
+            <li>Create a wrapper div with the overlay class [html]</li>
+                <ul>
+                    <li>Create inside the overlay a wrapper for the modal, with its class [html]</li>
+                        <ul>
+                            <li>And, inside the modal, create a content container, which could have its own scroll [html/css]</li>
+                            <li>If needed: a close button as a sibling of the content container. Or other elemnts which may be fixed or outside the scope of the content's scroll [html/css]</li>
+                        </ul>
+                </ul>
         </ul>
 
 
@@ -34,12 +41,12 @@
         {% endhighlight %}
 
         {% highlight html linenos=table %}
-            {% include atom.javascript.tabs.html.html %}
+            {% include atom.javascript.modal.html.html %}
         {% endhighlight %}
 
         <div class="o-grid o-grid--gutter">
             <div class="o-grid__item u-2-of-3-bp4">
-                {% include atom.javascript.tabs.html.html %}
+                {% include atom.javascript.modal.html.html %}
             </div>
         </div>
 

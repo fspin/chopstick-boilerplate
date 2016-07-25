@@ -4,12 +4,21 @@
     Styleguide specific scaffolding and demo styles
 */
 
+.c-section-header {
+    // min
+}
+
 .c-section-title {
     color: palette(color-neutral);
     border-bottom: 1px solid palette(color-neutral);
     @include padding-bottom(1);
     @include padding-top(1);
     @include text-dimensions($alpha-font-size,1,2);
+    width: 100%;
+
+    &:last-child {
+        text-align: right;
+    }
 }
 
 .c-scss {

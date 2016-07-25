@@ -135,6 +135,28 @@
     }
 }
 
+.c-button--close {
+    background-color: palette(color-close);
+    border-color: palette(color-close);
+    color: palette(color-neutral, light);
+
+    &,
+    &:visited {
+        color: palette(color-neutral, light);
+    }
+
+    &:hover,
+    &:focus {
+        background-color: palette(color-close, light);
+        color: palette(color-close, light);
+        color: palette(color-neutral, light);
+    }
+
+    &:active {
+        background-color: palette(color-close);
+    }
+}
+
 // Modifiers
 
 .c-button--postfix {

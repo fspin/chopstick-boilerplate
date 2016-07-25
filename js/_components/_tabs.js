@@ -6,8 +6,7 @@
  * - jQuery
  *
  * HTML Structure:
- * - tabNavigation > links (a.js-tabs-link) with attr(href) referencing the #tabs
- * - tabContent > in .js-tabs-content > elements with an id to be linked.
+ * - links (a.js-tabs-link) with attr(href) referencing the #tabs
  *
  * Functionalities:
  * -
@@ -20,7 +19,6 @@
 
         // Create default values (super basic tabs)
         var defaults = {
-            // tabNavigation: $('.js-tabs-nav'),
             tabLinks: $('.js-tabs-link'),
             eventName: 'click', // which event to select the tabs
             className: 'is-selected',
@@ -69,4 +67,4 @@
             _.activate($(this));
         });
     }
-})();
+}());

@@ -1,32 +1,63 @@
 ---
 layout: default
-title: Javscript
+title: Javascript
 section: javascript
 ---
-<div class="c-row c-row--alpha">
+<div id="section:index" class="c-row c-row--alpha">
     <div class="o-container">
-        <h2>Dependencies</h2>
-        <p>All JS UI components use jQuery</p>
+        <div class="o-grid o-grid--gutter">
+            <div class="o-grid__item u-2-of-3-bp4">
+                <h2>Dependencies</h2>
+                <p>All JS UI depend on jQuery</p>
 
-        <div class="c-section">
-            <h2 class="c-section-title">Javascript UI Components: Toggle</h2>
+                <div id="section:toggle" class="c-section">
+                    <div class="c-section-header o-flex o-flex--justify-space-between">
+                        <h2 class="c-section-title">Javascript UI Components: Toggle</h2>
+                        <span class="c-section-title"><a href="#section:index">Top</a></span>
+                    </div>
 
-            <div class="o-grid o-grid--gutter">
-                <div class="o-grid__item">
-                    {% include molecules.javascript.toggle.html %}
+                    <div class="o-grid o-grid--gutter">
+                        <div class="o-grid__item">
+                            {% include molecules.javascript.toggle.html %}
+                        </div>
+                    </div>
                 </div>
+
+                <div id="section:tab" class="c-section">
+                    <div class="c-section-header o-flex o-flex--justify-space-between">
+                        <h2 class="c-section-title">Javascript UI Components: Tabs</h2>
+                        <span class="c-section-title"><a href="#section:index">Top</a></span>
+                    </div>
+
+                    <div class="o-grid o-grid--gutter">
+                        <div class="o-grid__item">
+                            {% include molecules.javascript.tabs.html %}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section:modal" class="c-section">
+                    <div class="c-section-header o-flex o-flex--justify-space-between">
+                        <h2 class="c-section-title">Javascript UI Components: Modal</h2>
+                        <span class="c-section-title"><a href="#section:index">Top</a></span>
+
+                    </div>
+                    <div class="o-grid o-grid--gutter">
+                        <div class="o-grid__item">
+                            {% include molecules.javascript.modal.html %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="o-grid__item u-1-of-3-bp4">
+                <ul>
+                    <li><a href="#section:toggle">Toggle</a></li>
+                    <li><a href="#section:tab">Tabs</a></li>
+                    <li><a href="#section:modal">Modal</a></li>
+                </ul>
             </div>
         </div>
-
-        <div class="c-section">
-            <h2 class="c-section-title">Javascript UI Components: Tabs</h2>
-            <div class="o-grid o-grid--gutter">
-                <div class="o-grid__item">
-                    {% include molecules.javascript.tabs.html %}
-                </div>
-            </div>
-        </div>
-
-
     </div>
+
 </div>
